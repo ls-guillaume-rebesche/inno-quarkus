@@ -1,11 +1,12 @@
 package com.lightspeed.springboot.springboottest;
 
-import com.google.common.collect.Lists;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,19 +15,27 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerService {
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private EntityManager em;
 
+    @Transactional
     public Customer create(String name) {
         Customer customer = new Customer();
         customer.setName(name);
-        customer = customerRepository.save(customer);
+        em.persist(customer);
         log.info("Customer created with id {}", customer.getId());
         return customer;
     }
 
+    @Transactional
     public List<Customer> getAll() {
-        List<Customer> all = Lists.newArrayList(customerRepository.findAll());
-        log.info("All customers loaded ({} of them)", all.size());
-        return all;
+        List<Customer> resultList = em.createQuery("SELECT c FROM Customer c").getResultList();
+        log.info("All customers loaded ({} of them)", resultList.size());
+        return resultList;
+    }
+
+    @Transactional
+    public void delete(long customerId) {
+        em.remove(em.find(Customer.class, customerId));
+        log.info("Deleted customer {}", customerId);
     }
 }

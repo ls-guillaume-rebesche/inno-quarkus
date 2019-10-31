@@ -31,4 +31,10 @@ public class CustomerService {
         log.info("All customers loaded ({} of them)", resultList.size());
         return resultList;
     }
+
+    @Transactional
+    public void delete(long customerId) {
+        em.remove(em.find(Customer.class, customerId));
+        log.info("Deleted customer {}", customerId);
+    }
 }

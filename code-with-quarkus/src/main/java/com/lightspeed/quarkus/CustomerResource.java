@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -27,5 +29,11 @@ public class CustomerResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Customer create(Customer customer) {
         return customerService.createCustomer(customer.getName());
+    }
+
+    @DELETE
+    @Path("/{customerId}")
+    public void delete(@PathParam("customerId") long customerId) {
+        customerService.delete(customerId);
     }
 }
