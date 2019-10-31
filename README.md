@@ -5,6 +5,23 @@
 - [springboot-test](springboot-test) folder contains the same API but written with Spring boot
 - [loadtester](loadtester) folder contains the load tester script
 
+## Build and run
+
+Quarkus project:
+ - `cd code-with-quarkus`
+ - compile and package native binary`./mvnw clean package -Pnative` (remove the `-Pnative` to compile a jar file)
+ - run the binary `./target/code-with-quarkus-1.0.0-SNAPSHOT-runner`
+
+Spring boot project:
+ - `cd springboot-test`
+ - compile and package native binary`./mvnw clean package`
+ - run the jar file `java -jar target/springboot-test-0.0.1-SNAPSHOT.jar`
+ 
+Load tester:
+ - `cd springboot-test`
+ - compile and package native binary`./mvnw clean package`
+ - run the jar file `java -jar target/loadtester-0.0.1-SNAPSHOT.jar`
+
 ## Results
 
 ### Compilation times
